@@ -1,14 +1,21 @@
 import "./App.css";
 import "modern-normalize/modern-normalize.css";
+import { ToastContainer} from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { Component } from "react";
-import Searchbar from "./components/Searchbar/SearchBar";
+import Searchbar from "./components/Searchbar";
 
 class App extends Component {
-  state = {};
+  state = { query: "" };
+  handleFormSubmit = (query) => {
+    this.setState({ query });
+  };
   render() {
     return (
       <div className="App">
-        <Searchbar />
+        <Searchbar onSubmit={this.handleFormSubmit} />
+
+        <ToastContainer autoClose={2000} />
       </div>
     );
   }
