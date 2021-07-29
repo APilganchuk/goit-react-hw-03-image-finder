@@ -1,8 +1,17 @@
 import "./App.css";
-import 'modern-normalize/modern-normalize.css';
+import "modern-normalize/modern-normalize.css";
+import { Component } from "react";
+import Searchbar from "./components/Searchbar/SearchBar";
 
-function App() {
-  return <div className="App">asd</div>;
+class App extends Component {
+  state = {};
+  render() {
+    return (
+      <div className="App">
+        <Searchbar />
+      </div>
+    );
+  }
 }
 
 export default App;
