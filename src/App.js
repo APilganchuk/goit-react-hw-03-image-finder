@@ -54,7 +54,6 @@ class App extends Component {
   };
   handleImgClick = (src) => {
     this.setState({ bigImg: src, showModal: true });
-    console.log(this.state);
   };
   toggleModal = () => {
     this.setState((prevState) => ({
@@ -62,7 +61,6 @@ class App extends Component {
     }));
   };
   render() {
-    console.log(this.state.bigImg);
     return (
       <div className="App">
         {this.state.showModal && (
