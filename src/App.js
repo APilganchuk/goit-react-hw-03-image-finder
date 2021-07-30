@@ -4,6 +4,7 @@ import "react-toastify/dist/ReactToastify.css";
 import imagesApi from "./components/services/image-api";
 import { ToastContainer } from "react-toastify";
 import { Component } from "react";
+import { toast } from "react-toastify";
 import Searchbar from "./components/Searchbar";
 import ImageGallery from "./components/ImageGallery";
 import LoadMoreBtn from "./components/LoadMoreBtn";
@@ -43,6 +44,9 @@ class App extends Component {
           top: document.documentElement.scrollHeight,
           behavior: "smooth",
         });
+        if (this.state.img.length === 0) {
+          toast.warn("no results were found for your request!");
+        }
       });
   };
 
@@ -69,15 +73,16 @@ class App extends Component {
           </Modal>
         )}
         <Searchbar onSubmit={this.handleFormSubmit} />
-
         <ImageGallery
           handleImgClick={this.handleImgClick}
           images={this.state.img}
         />
+        {this.state.img.length > 0 && (
+          <LoadMoreBtn onClick={this.onClickLoadMoreBtn} />
+        )}
 
-        {this.state.query && <LoadMoreBtn onClick={this.onClickLoadMoreBtn} />}
         {this.state.isLoading && <MyLoader />}
-        <ToastContainer autoClose={2000} />
+        <ToastContainer autoClose={3000} />
       </div>
     );
   }
