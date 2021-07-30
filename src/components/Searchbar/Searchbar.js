@@ -14,7 +14,6 @@ class Searchbar extends Component {
     e.preventDefault();
     if (this.state.query.trim() === "") {
       toast.error("the field must not be empty!");
-
       return;
     }
     this.props.onSubmit(this.state.query);
