@@ -8,6 +8,7 @@ import Searchbar from "./components/Searchbar";
 import ImageGallery from "./components/ImageGallery";
 import LoadMoreBtn from "./components/LoadMoreBtn";
 import MyLoader from "./components/Loader";
+import Modal from "./components/Modal/Modal";
 
 class App extends Component {
   state = {
@@ -15,11 +16,13 @@ class App extends Component {
     img: [],
     currentPage: 1,
     isLoading: false,
+    showModal: false,
   };
   componentDidUpdate(prevProps, PrevState) {
     const { query } = this.state;
     if (PrevState.query !== query) {
       this.handleQuery();
+      this.setState({ currentPage: 1, img: [] });
     }
   }
 
@@ -34,7 +37,13 @@ class App extends Component {
           currentPage: prevState.currentPage + 1,
         }))
       )
-      .finally(this.setState({ isLoading: false }));
+      .finally(() => {
+        this.setState({ isLoading: false });
+        window.scrollTo({
+          top: document.documentElement.scrollHeight,
+          behavior: "smooth",
+        });
+      });
   };
 
   handleFormSubmit = (query) => {
@@ -43,14 +52,33 @@ class App extends Component {
   onClickLoadMoreBtn = () => {
     this.handleQuery();
   };
-
+  handleImgClick = (src) => {
+    this.setState({ bigImg: src, showModal: true });
+    console.log(this.state);
+  };
+  toggleModal = () => {
+    this.setState((prevState) => ({
+      showModal: !prevState.showModal,
+    }));
+  };
   render() {
-    console.log(this.state.isLoading);
+    console.log(this.state.bigImg);
     return (
       <div className="App">
+        {this.state.showModal && (
+          <Modal toggleModal={this.toggleModal}>
+            <img src={this.state.bigImg} alt="" />
+          </Modal>
+        )}
         <Searchbar onSubmit={this.handleFormSubmit} />
-        <ImageGallery images={this.state.img} />
-        <LoadMoreBtn onClick={this.onClickLoadMoreBtn} />
+
+        <ImageGallery
+          handleImgClick={this.handleImgClick}
+          images={this.state.img}
+        />
+
+        {this.state.query && <LoadMoreBtn onClick={this.onClickLoadMoreBtn} />}
+        {this.state.isLoading && <MyLoader />}
         <ToastContainer autoClose={2000} />
       </div>
     );

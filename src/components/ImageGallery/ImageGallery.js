@@ -1,10 +1,10 @@
 import ImageGalleryItem from "../ImageGalleryItem/ImageGalleryItem";
 
-const ImageGallery = ({ images }) => {
+const ImageGallery = ({ images, handleImgClick }) => {
   return (
     <>
       <ul className="ImageGallery">
-        <ImageGalleryItem images={images} />
+        <ImageGalleryItem handleImgClick={handleImgClick} images={images} />
       </ul>
     </>
   );
